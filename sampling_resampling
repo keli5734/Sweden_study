@@ -1,0 +1,392 @@
+library(readxl)
+library(ggplot2)
+library(tidyverse)
+library(viridis)  
+library(zoo)
+library(adephylo)
+library(cowplot)
+library(gridExtra)
+library(lubridate)
+library(lattice)
+library(grid)
+library(ggpubr)
+library(ape)
+library(latex2exp)
+library(lhs)
+library(deSolve)
+library(dplyr)
+
+set.seed(12345)
+N_sample_size <- 50000 # sampling size for LHS
+N_varied_parameters <- 2
+
+uniform_LHS <- randomLHS(N_sample_size, N_varied_parameters)
+transformed_LHS <- matrix(NA, nrow = N_sample_size, ncol = N_varied_parameters)
+
+
+
+transformed_LHS[,1] <- qunif(uniform_LHS[,1], min = -5, max = 0) # the size of viral interference effects
+transformed_LHS[,2] <- qunif(uniform_LHS[,2], min = 1, max = 21) # the duration of viral interference effects
+
+
+
+xi <- 10.^transformed_LHS[,1]
+eta <- transformed_LHS[,2]
+
+
+
+
+
+
+predicted_traj1 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run1.rds"))
+predicted_traj2 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run2.rds"))
+predicted_traj3 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run3.rds"))
+predicted_traj4 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run4.rds"))
+predicted_traj5 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run5.rds"))
+predicted_traj6 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run6.rds"))
+predicted_traj7 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run7.rds"))
+predicted_traj8 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run8.rds"))
+predicted_traj9 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run9.rds"))
+predicted_traj10 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run10.rds"))
+
+predicted_traj11 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run11.rds"))
+predicted_traj12 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run12.rds"))
+predicted_traj13 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run13.rds"))
+predicted_traj14 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run14.rds"))
+predicted_traj15 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run15.rds"))
+predicted_traj16 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run16.rds"))
+predicted_traj17 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run17.rds"))
+predicted_traj18 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run18.rds"))
+predicted_traj19 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run19.rds"))
+predicted_traj20 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run20.rds"))
+
+predicted_traj21 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run21.rds"))
+predicted_traj22 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run22.rds"))
+predicted_traj23 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run23.rds"))
+predicted_traj24 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run24.rds"))
+predicted_traj25 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run25.rds"))
+predicted_traj26 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run26.rds"))
+predicted_traj27 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run27.rds"))
+predicted_traj28 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run28.rds"))
+predicted_traj29 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run29.rds"))
+predicted_traj30 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run30.rds"))
+
+predicted_traj31 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run31.rds"))
+predicted_traj32 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run32.rds"))
+predicted_traj33 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run33.rds"))
+predicted_traj34 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run34.rds"))
+predicted_traj35 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run35.rds"))
+predicted_traj36 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run36.rds"))
+predicted_traj37 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run37.rds"))
+predicted_traj38 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run38.rds"))
+predicted_traj39 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run39.rds"))
+predicted_traj40 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run40.rds"))
+
+predicted_traj41 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run41.rds"))
+predicted_traj42 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run42.rds"))
+predicted_traj43 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run43.rds"))
+predicted_traj44 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run44.rds"))
+predicted_traj45 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run45.rds"))
+predicted_traj46 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run46.rds"))
+predicted_traj47 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run47.rds"))
+predicted_traj48 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run48.rds"))
+predicted_traj49 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run49.rds"))
+predicted_traj50 <- readRDS(paste0("results_viral_interference_climate_50k/saved_rsv_dynamics_run50.rds"))
+
+
+predicted_traj <- c(predicted_traj1,predicted_traj2, predicted_traj3,
+                    predicted_traj4,predicted_traj5, predicted_traj6,
+                    predicted_traj7,predicted_traj8, predicted_traj9, 
+                    predicted_traj10,
+                    predicted_traj11,predicted_traj12, predicted_traj13,
+                    predicted_traj14,predicted_traj15, predicted_traj16,
+                    predicted_traj17,predicted_traj18, predicted_traj19, 
+                    predicted_traj20,
+                    predicted_traj21,predicted_traj22, predicted_traj23,
+                    predicted_traj24,predicted_traj25, predicted_traj26,
+                    predicted_traj27,predicted_traj28, predicted_traj29, 
+                    predicted_traj30,
+                    predicted_traj31,predicted_traj32, predicted_traj33,
+                    predicted_traj34,predicted_traj35, predicted_traj36,
+                    predicted_traj37,predicted_traj38, predicted_traj39, 
+                    predicted_traj40,
+                    predicted_traj41,predicted_traj42, predicted_traj43,
+                    predicted_traj44,predicted_traj45, predicted_traj46,
+                    predicted_traj47,predicted_traj48, predicted_traj49, 
+                    predicted_traj50)
+
+
+
+
+predicted_traj <- Filter(function(x) !is.null(x) && length(x) > 0, predicted_traj)
+
+
+clean_data <-  readRDS("data_process/clean_data_RSV_FLU.rds")
+
+
+# calibrate model with the first 10 years from the 1998/1999 season to 2008/2009 season 
+
+rsv_data <- clean_data %>% 
+  select(RSV, season, date)
+
+N_sample_size <- 50000
+goodness_of_fit_rsv <- c()
+for (i in 1:N_sample_size) {
+  
+  prediction <- predicted_traj[[i]]
+  goodness_of_fit_rsv[i] <- sum(dpois(x = rsv_data$RSV, 
+                                      lambda = prediction,
+                                      log = TRUE))
+  
+}
+
+
+
+log_weights <- goodness_of_fit_rsv - max(goodness_of_fit_rsv)  # Normalize weights
+weights <- exp(log_weights)
+weights <- weights / sum(weights)  # Normalize weights to sum to 1
+
+
+
+
+n_resamples <- 2* N_sample_size / 10 # keep 1-10 ratio
+
+# Re-sample from the proposal distribution using the calculated weights for log10(xi)
+resampled_indices_log10_theta1 <- sample(seq_along(xi), size = n_resamples, replace = TRUE, prob = weights)
+posterior_samples_log10_theta1 <- xi[resampled_indices_log10_theta1]
+resampled_parameter <- data.frame(x = log10(posterior_samples_log10_theta1))
+
+posterior_samples_theta2 <- eta[resampled_indices_log10_theta1]
+resampled_parameter_theta2 <- data.frame(x = posterior_samples_theta2)
+
+ggplot() +
+  geom_histogram(data = resampled_parameter, aes(x = x, y = after_stat(count) / max(count), color = "Resampled Distribution", fill = "Resampled Distribution"),  bins = 40, alpha = .7) +
+  #stat_function(fun = dunif, args = list(min = -5, max = 0), aes(color = "Uniform Distribution"), size = 1.5) +  # Uniform distribution plot
+  geom_vline(aes(xintercept = median(resampled_parameter$x)), color = "brown3", size = 1.5, linetype = "dashed")+ 
+  theme_minimal()  + 
+  labs(y = "Frequency", 
+       x = TeX("$\\log{10}(\\xi)$")) + 
+  scale_color_manual(name = NULL,
+                     values = c(#"the best 2% Distribution" = "#b2df8a",
+                       "Resampled Distribution" = "transparent",
+                       "Uniform Distribution" = "black"),
+                     labels = c("IR",
+                                #"LHS",
+                                "Prior")) +
+  scale_fill_manual(name = NULL,
+                    values = c(#"the best 2% Distribution" = "#b2df8a",
+                      "Resampled Distribution" = "cornflowerblue"),
+                    
+                    labels = c(#"IR",
+                      "LHS"
+                    )) +
+  scale_x_continuous(limits = c(-5, 0)) + 
+  guides(color = "none") + 
+  guides(fill = "none")
+
+
+
+
+
+
+
+ggplot() +
+  geom_histogram(data = resampled_parameter_theta2, aes(x = x, y = after_stat(count) / max(count), color = "Resampled Distribution", fill = "Resampled Distribution"),  bins = 20, alpha = .7) +
+  #stat_function(fun = dunif, args = list(min = 1, max = 21), aes(color = "Uniform Distribution"), size = 1.5) +  # Uniform distribution plot
+  geom_vline(aes(xintercept = median(resampled_parameter_theta2$x)), color = "brown3", size = 1.5, linetype = "dashed")+ 
+  theme_minimal()  + 
+  labs(y = "Frequency", 
+       x = TeX("$\\eta$")) + 
+  scale_color_manual(name = NULL,
+                     values = c(#"the best 2% Distribution" = "#b2df8a",
+                       "Resampled Distribution" = "transparent",
+                       "Uniform Distribution" = "black"),
+                     labels = c(#"IR",
+                       "LHS",
+                       "Prior")) +
+  scale_fill_manual(name = NULL,
+                    values = c(#"the best 2% Distribution" = "#b2df8a",
+                      "Resampled Distribution" = "cornflowerblue"),
+                    labels = c(#"IR",
+                      "LHS")) +
+  scale_x_continuous(limits = c(1, 21)) + 
+  guides(color = "none") + 
+  guides(fill = "none")
+
+
+
+
+# library(patchwork)
+# 
+# xi_plot <- ggplot() +
+#   geom_histogram(data = resampled_parameter, aes(x = x, y = after_stat(count) / max(count), color = "Resampled Distribution", fill = "Resampled Distribution"),  bins = 40, alpha = .7) +
+#   stat_function(fun = dunif, args = list(min = -5, max = 0), aes(color = "Uniform Distribution"), size = 1) +  # Uniform distribution plot
+#   geom_vline(aes(xintercept = median(resampled_parameter$x)), color = "brown3")+ 
+#   theme_minimal()  + 
+#   labs(y = "Frequency", 
+#        x = TeX("$\\log{10}(\\xi)$")) + 
+#   scale_color_manual(name = NULL,
+#                      values = c(#"the best 2% Distribution" = "#b2df8a",
+#                        "Resampled Distribution" = "cornflowerblue",
+#                        "Uniform Distribution" = "black"),
+#                      labels = c(#"IR",
+#                        "LHS",
+#                        "Prior")) +
+#   scale_fill_manual(name = NULL,
+#                     values = c(#"the best 2% Distribution" = "#b2df8a",
+#                       "Resampled Distribution" = "cornflowerblue"),
+#                     
+#                     labels = c(#"IR",
+#                       "LHS"
+#                     )) +
+#   scale_x_continuous(limits = c(-5, 0)) + 
+#   guides(color = "none")
+# 
+# eta_plot <- ggplot() +
+#   geom_histogram(data = resampled_parameter_theta2, aes(x = x, y = after_stat(count) / max(count), color = "Resampled Distribution", fill = "Resampled Distribution"),  bins = 20, alpha = .7) +
+#   stat_function(fun = dunif, args = list(min = 1, max = 21), aes(color = "Uniform Distribution"), size = 1) +  # Uniform distribution plot
+#   geom_vline(aes(xintercept = median(resampled_parameter_theta2$x)), color = "brown3")+ 
+#   theme_minimal()  + 
+#   labs(y = "Frequency", 
+#        x = TeX("$\\eta$")) + 
+#   scale_color_manual(name = NULL,
+#                      values = c(#"the best 2% Distribution" = "#b2df8a",
+#                        "Resampled Distribution" = "cornflowerblue",
+#                        "Uniform Distribution" = "black"),
+#                      labels = c(#"IR",
+#                        "LHS",
+#                        "Prior")) +
+#   scale_fill_manual(name = NULL,
+#                     values = c(#"the best 2% Distribution" = "#b2df8a",
+#                       "Resampled Distribution" = "cornflowerblue"),
+#                     
+#                     labels = c(#"IR",
+#                       "LHS"
+#                     )) +
+#   scale_x_continuous(limits = c(1, 21)) + 
+#   guides(color = "none") + 
+#   coord_flip()
+# 
+#  sactter_points_df <- data.frame(xi = resampled_parameter$x,
+#                                 eta = resampled_parameter_theta2$x)
+#  
+#  sactter_plot <- ggplot(data = sactter_points_df) + 
+#    geom_point(aes(x = xi, y= eta)) + 
+#    scale_x_continuous(limits = c(-5, 0)) 
+#  
+#  xi_plot + plot_spacer() + sactter_plot + eta_plot + 
+#    plot_layout(
+#      ncol = 2, 
+#      nrow = 2, 
+#      widths = c(4, 1),
+#      heights = c(1, 4)
+#    ) 
+
+
+# plot first 10 trajectories as examples 
+num_select <- 50
+lst <- sort(weights, index.return=TRUE, decreasing=TRUE)
+ind <- lapply(lst, `[`, lst$x %in% head(unique(lst$x),num_select))
+xi_selected <- xi[ind$ix]
+eta_selected <- eta[ind$ix]
+
+source("parameter_setting_viral_interference.R")
+H_predicted_list <- list()
+
+for(nn in 1:num_select){
+  parm_viral_interference_climate_prediction$xi = xi_selected[nn]
+  parm_viral_interference_climate_prediction$eta = eta_selected[nn]
+  source("predictions.R")
+  H_predicted_list[[nn]] <- H_predicted
+  
+}
+
+H_predicted_unlist <- unlist(H_predicted_list)
+
+clean_data <-  readRDS("data_process/clean_data_RSV_FLU.rds")
+data_fit_null_model <- clean_data %>% select(RSV, season, epi_week_cdc,date)
+hospitalisation_data <- data_fit_null_model$RSV
+
+prediction_df <- data.frame(hosp = c(hospitalisation_data, H_predicted_unlist), 
+                            group = rep(c(as.factor(1:(num_select+1))), each = length(hospitalisation_data)), 
+                            type = rep(c(as.factor(1:2)), c(length(hospitalisation_data), length(hospitalisation_data)*num_select)),
+                            date = rep(data_fit_null_model$date, (num_select+1)))
+
+
+ggplot() +
+  geom_line(data = prediction_df, aes(x = date, y = hosp, group = group, color = type)) +
+  theme_minimal()  + 
+  labs(y = "RSV hospitalization", 
+       x = TeX("Date")) + 
+  scale_color_manual(name = NULL,
+                     values = c(#"the best 2% Distribution" = "#b2df8a",
+                       "1" = "blue",
+                       "2" = "black"),
+                     labels = c(#"IR",
+                       "LHS",
+                       "Prior")) +
+  guides(color = "none") + 
+  scale_y_continuous(limits = c(0,70))  
+
+
+
+
+
+
+
+
+library(gridExtra)
+
+theme0 <- function(...) theme( legend.position = "none",
+                               panel.background = element_blank(),
+                               panel.grid.major = element_blank(),
+                               panel.grid.minor = element_blank(),
+                               panel.margin = unit(0,"null"),
+                               axis.ticks = element_blank(),
+                               axis.text.x = element_blank(),
+                               axis.text.y = element_blank(),
+                               axis.title.x = element_blank(),
+                               axis.title.y = element_blank(),
+                               axis.ticks.length = unit(0,"null"),
+                               axis.ticks.margin = unit(0,"null"),
+                               panel.border=element_rect(color=NA),...)
+
+DF_climate <- data.frame(x=resampled_parameter$x,
+                      y=resampled_parameter_theta2$x)
+
+p1 <- ggplot(DF,aes(x=x,y=y)) + 
+  geom_point(size = 1) +
+  scale_x_continuous(expand=c(0.02,0)) +
+  scale_y_continuous(expand=c(0.02,0)) +
+  theme_bw() +
+  theme(legend.position="none",plot.margin=unit(c(0,0,0,0),"points")) + 
+  scale_x_continuous(limits = c(-5,0)) + 
+  scale_y_continuous(limits = c(1,21))
+
+
+
+
+p2 <- ggplot(DF) + 
+  geom_histogram(aes(x = x, y = after_stat(count) / max(count)),  bins = 40, alpha = .7) +
+  scale_x_continuous(breaks=NULL,expand=c(0.02,0)) +
+  scale_y_continuous(breaks=NULL,expand=c(0.00,0)) +
+  theme_bw() +
+  theme0(plot.margin = unit(c(1,0,-0.48,2.2),"lines")) + 
+  scale_x_continuous(limits = c(-5,0)) 
+
+
+
+p3 <- ggplot(DF) + 
+  geom_histogram(aes(x = y, y = after_stat(count) / max(count)),  bins = 20, alpha = .7) +
+  coord_flip()  + 
+  scale_x_continuous(labels = NULL,breaks=NULL,expand=c(0.02,0)) +
+  scale_y_continuous(labels = NULL,breaks=NULL,expand=c(0.00,0)) +
+  theme_bw() +
+  theme0(plot.margin = unit(c(0,1,1.2,0),"lines")) + 
+  scale_x_continuous(limits = c(1,21))
+
+
+grid.arrange(arrangeGrob(p2,ncol=2,widths=c(3,1)),
+             arrangeGrob(p1,p3,ncol=2,widths=c(3,1)),
+             heights=c(1,3))
+
