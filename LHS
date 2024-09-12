@@ -4,7 +4,7 @@ library(deSolve)
 library(dplyr)
 
 set.seed(12345)
-N_sample_size <- 20000 # sampling size for LHS
+N_sample_size <- 100000 # sampling size for LHS
 N_varied_parameters <- 2
 
 uniform_LHS <- randomLHS(N_sample_size, N_varied_parameters)
