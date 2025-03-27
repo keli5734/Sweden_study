@@ -2,7 +2,7 @@
 library(latex2exp)
 library(ggpubr)
 
-resampled_parameter1 <- readRDS("sampled_xi1.rds")
+resampled_parameter1 <- readRDS("sampled_xi1.rds") # sampled parameters
 resampled_parameter2 <- readRDS("sampled_xi2.rds")
 resampled_parameter3 <- readRDS("sampled_xi3.rds")
 
