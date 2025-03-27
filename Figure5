@@ -1,0 +1,123 @@
+
+library(latex2exp)
+library(ggpubr)
+
+resampled_parameter1 <- readRDS("sampled_xi1.rds")
+resampled_parameter2 <- readRDS("sampled_xi2.rds")
+resampled_parameter3 <- readRDS("sampled_xi3.rds")
+
+
+my_fill = pal_lancet(palette = c("lanonc"), alpha = 0.5)(9)
+
+ 
+ 
+Fig5A <- ggplot() +
+  geom_histogram(data = resampled_parameter1, aes(x = (x), y = after_stat(count) / max(count), color = "Resampled Distribution", fill = "Resampled Distribution"),  bins = 30) +
+  geom_histogram(data = resampled_parameter2, aes(x = (x), y = after_stat(count) / max(count), color = "Resampled Distribution", fill = "Resampled Distribution2"),  bins = 50) +
+  geom_histogram(data = resampled_parameter3, aes(x = (x), y = after_stat(count) / max(count), color = "Resampled Distribution", fill = "Resampled Distribution3"),  bins = 30) +
+  geom_vline(aes(xintercept = median(resampled_parameter1$x)), color = "black", linewidth = 1, linetype = "dashed", alpha = .8)+
+  geom_vline(aes(xintercept = median(resampled_parameter2$x)), color = "black", linewidth = 1, linetype = "dashed", alpha = .8)+
+  geom_vline(aes(xintercept = median(resampled_parameter3$x)), color = "black", linewidth = 1, linetype = "dashed", alpha = .8)+
+  # 
+  theme_minimal()  + 
+  labs(y = "Frequency", 
+       #x = TeX("$\\log{10}(\\xi)$")) + 
+       x = "log10(Viral interference effects)") +
+  scale_color_manual(name = NULL,
+                     values = c(#"the best 2% Distribution" = "#b2df8a",
+                       "Resampled Distribution" = "transparent",
+                       "Uniform Distribution" = "black"),
+                     labels = c("IR",
+                                #"LHS",
+                                "Prior")) +
+  scale_fill_manual(name = NULL,
+                    values = c(#"the best 2% Distribution" = "#b2df8a",
+                      "Resampled Distribution" = my_fill[1],
+                      "Resampled Distribution2" = my_fill[2],
+                      "Resampled Distribution3" = my_fill[3]),
+                    
+                    labels = c(#"IR",
+                      "LHS"
+                    )) +
+  scale_x_continuous(limits = c(-5, 0)) + 
+  guides(color = "none") + 
+  guides(fill = "none") + 
+  theme(panel.border = element_blank(), axis.line = element_line(colour = "black")) +
+  theme(
+    axis.text.x = element_text(face="bold"),
+    axis.text.y = element_text(face="bold"),
+    axis.title.x = element_text(face="bold"),
+    axis.title.y = element_text(face="bold"),
+    plot.title = element_text(face="bold", hjust = 0.5),
+    #axis.line = element_blank(),
+    panel.grid.major = element_blank(),
+    #panel.grid.minor = element_blank(),
+    legend.position = "top") + 
+  theme(axis.text.x = element_text(color="black",
+                                   size = 25, angle=0),
+        axis.text.y = element_text(color="black",
+                                   size= 25, angle=0),
+        text = element_text(size = 25))  
+Fig5A
+
+
+ 
+bins = 20
+resampled_parameter4 <- readRDS("sampled_eta.rds")
+  
+Fig5B <- ggplot() +
+  geom_histogram(data = resampled_parameter4, aes(x = (value), y = after_stat(count) / max(count), color = "Resampled Distribution", fill = "Resampled Distribution"),  bins = bins) +
+  geom_vline(aes(xintercept = median(resampled_parameter4$value)), color = "black", linewidth = 1, linetype = "dashed", alpha = .8)+
+  theme_minimal()  + 
+  labs(y = "Frequency", 
+       #x = TeX("$\\log{10}(\\xi)$")) + 
+       x = "Duration of temporary protection") +
+  scale_color_manual(name = NULL,
+                     values = c(#"the best 2% Distribution" = "#b2df8a",
+                       "Resampled Distribution" = "transparent",
+                       "Uniform Distribution" = "black"),
+                     labels = c("IR",
+                                #"LHS",
+                                "Prior")) +
+  scale_fill_manual(name = NULL,
+                    values = c(#"the best 2% Distribution" = "#b2df8a",
+                      "Resampled Distribution" = my_fill[6]),
+                    
+                    labels = c(#"IR",
+                      "LHS"
+                    )) +
+  scale_x_continuous(limits = c(0, 20)) + 
+  guides(color = "none") + 
+  guides(fill = "none") + 
+  theme(panel.border = element_blank(), axis.line = element_line(colour = "black")) +
+  theme(
+    axis.text.x = element_text(face="bold"),
+    axis.text.y = element_text(face="bold"),
+    axis.title.x = element_text(face="bold"),
+    axis.title.y = element_text(face="bold"),
+    plot.title = element_text(face="bold", hjust = 0.5),
+    #axis.line = element_blank(),
+    panel.grid.major = element_blank(),
+    #panel.grid.minor = element_blank(),
+    legend.position = "top") + 
+  theme(axis.text.x = element_text(color="black",
+                                   size = 25, angle=0),
+        axis.text.y = element_text(color="black",
+                                   size= 25, angle=0),
+        text = element_text(size = 25))  
+Fig5B
+
+
+
+
+Fig5 <- ggarrange(Fig5A, Fig5B,
+                    nrow = 1,
+                    ncol = 2,
+                    labels = c("A", "B"),
+                    widths = c(0.5,0.5),
+                    font.label = list(size = 20, color = "black"))
+Fig5
+
+
+
+  
