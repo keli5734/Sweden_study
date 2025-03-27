@@ -1,7 +1,7 @@
 library(tidyverse)
 library(ggsci)
 
-# data can be found from "data.zip" 
+# data can be found from "data_sweden_study.zip" 
 # make sure to change working directory.
 
 my_dataset <-  readRDS("data_process/clean_data_RSV_FLU_subset.rds")  
