@@ -1,4 +1,4 @@
-This is the code to replicate the results from the study Unraveling the Role of Viral Interference in Disrupting Biennial RSV Epidemics in Northern Stockholm.
+"Data and Code.zip" contains the code and data to replicate the results from the study Unraveling the Role of Viral Interference in Disrupting Biennial RSV Epidemics in Northern Stockholm.
 
 One-strain model: 
 
