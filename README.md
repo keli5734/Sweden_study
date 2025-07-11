@@ -2,7 +2,7 @@
 
 [One-strain model.zip]: 
 
-* Figure1 - Figure6.R: the code to reproduce the figures in the main manuscript.
+* Figure1.R - Figure6.R: the code to reproduce the figures in the main manuscript.
 
 * Model calibration_baseline_model.zip: to estimate model parameters for the baseline model without viral interference parameters.
    * ODE model can be found in "RSV_transmission_model.R".
