@@ -17,9 +17,7 @@
   * High performance computers are required to generate 100,000 model predictions. Run batch(1-50).sh in the HPC.
   * Output for viral interference parameters can be found in sampled_xi1.rds, sampled_xi2.rds, sampled_xi3.rds, and sampled_eta.rds.
 
-[uncertainty results.zip]: 
-
-* The model prediction results of the uncertainty analysis, and used to plot Figure 6 in the main text.
+* "phase_plot_data_uncertainty.rds": The model prediction results of the uncertainty analysis.
 
 
 [Two-strain model.zip]: 
