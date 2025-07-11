@@ -14,6 +14,7 @@
 
 * LHS_SIR.zip: latin-hypercube sampling and sampling-importance-resampling methods were used for uncertainy anlaysis for the best-fit model (i.e., Model 3).
   * The latin-hypercube sampling code can be found in LHS_sampling.R.
+  * The importance resampling code can be found in \bold{Importance_resampling.R}
   * High performance computers are required to generate 100,000 model predictions. Run batch(1-50).sh in the HPC.
   * Output for viral interference parameters can be found in sampled_xi1.rds, sampled_xi2.rds, sampled_xi3.rds, and sampled_eta.rds.
 
